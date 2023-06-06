@@ -1,37 +1,23 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import "./App.css";
 import Header from "./components/Header";
 import NotesListPage from "./pages/NotesListPage";
 import NotePage from "./pages/NotePage";
+import React from "react";
 
 function App() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("https://api.unsplash.com/photos/random")
-      .then((response) => {
-        setPosts(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  console.log(typeof posts)
-
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<NotesListPage />} />
-          <Route path="/note" element={<NotePage />} />
-        </Routes>
-      </div>
-    </Router>
+    <React.StrictMode>
+      <Router>
+        <div>
+          <Header />
+          <Routes>
+            <Route path="/" element={<NotesListPage />} />
+            <Route path="/note/:id" element={<NotePage />} />
+          </Routes>
+        </div>
+      </Router>
+    </React.StrictMode>
   );
 }
 
